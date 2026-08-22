@@ -1,17 +1,23 @@
 # XAUUSD Signal Terminal
 
-React/Vite dashboard for live XAU/USD 1-minute data from Twelve Data with SMA/EMA, RSI, MACD, Bollinger Bands, Stochastic and a composite BUY/SELL/HOLD signal.
+React/Vite dashboard for XAU/USD market data with a server-side Twelve Data proxy, indicator calculations, charting, signal history, alerts, and stale-data protection.
 
-## Environment variable
+## Required Vercel environment variable
 
-Set `VITE_TWELVE_DATA_API_KEY` in the deployment environment. Never commit the API key to GitHub.
+Set this **server-side** variable in the Vercel project:
 
-## Run locally
+`TWELVE_DATA_API_KEY`
+
+Do **not** use `VITE_TWELVE_DATA_API_KEY` for the provider credential. Vite exposes `VITE_*` variables to browser code at build time, so sensitive API keys should remain server-side.
+
+## Run
 
 ```bash
 npm install
 npm run dev
 ```
+
+The live market endpoint is `/api/market`. The production deployment is designed for Vercel/serverless functions.
 
 ## Build
 
@@ -19,4 +25,4 @@ npm run dev
 npm run build
 ```
 
-The dashboard polls every 30 seconds while polling is enabled.
+The dashboard refreshes every 30 seconds while polling is enabled. It also flags stale data rather than silently treating an old response as current.
